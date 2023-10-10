@@ -7,7 +7,7 @@ use tantivy::tokenizer::{RemoveLongFilter, TextAnalyzer, TokenizerManager};
 use whitespace_tokenizer_fork::WhitespaceTokenizer;
 use std::path::PathBuf;
 
-const INPUT_FILE_PATH: &str = "/Volumes/workplace/Tantivy-JNI-Prototype/mylib/src/bin/input_data.txt";
+const INPUT_FILE_PATH: &str = "./mylib/src/bin/input_data.txt";
 
 pub fn build_index(output_dir: &PathBuf, index_delete_pct: i32) -> tantivy::Result<()> {
     println!("Build index at `{}` with delete_pct {}%", output_dir.display(), index_delete_pct);

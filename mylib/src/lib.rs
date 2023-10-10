@@ -13,7 +13,7 @@ use jni::sys::jint;
 // This is just a pointer. We'll be returning it from our function. We
 // can't return one of the objects with lifetime information because the
 // lifetime checker won't let us.
-use crate::tantivy::build_index;
+use crate::tantivy::{build_index, do_query};
 
 // This keeps Rust from "mangling" the name and making it unique for this
 // crate.
@@ -37,5 +37,23 @@ pub extern "system" fn Java_SearchTantivy_buildindex<'local>(
 
 }
 
+#[no_mangle]
+pub extern "system" fn Java_SearchTantivy_doquery<'local>(
+    mut env: JNIEnv<'local>,
+    class: JClass<'local>,
+    input_dir: JString<'local>,
+    query_field: JString<'local>
+) {
+    let input_dir: String = String::from(env
+        .get_string(&input_dir)
+        .expect("Couldn't get java string"));
+
+    let query_field: String = String::from(env
+        .get_string(&query_field)
+        .expect("Couldn't get java string"));
+
+    let _ = do_query(&Path::new(&input_dir), query_field);
+
+}
 
 
